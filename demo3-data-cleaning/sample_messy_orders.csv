@@ -1,0 +1,14 @@
+order_id, order_date, customer, email, amount, status
+A001,2026/10/01, Tanaka ,TANAKA@example.com,"12,000",完了
+A002,2026-10-02,Suzuki,suzuki@example.com,８５００,pending
+A003,Oct 3 2026,Sato,sato@example .com,"9,800",DONE
+A001,2026/10/01,Tanaka,TANAKA@example.com,"12,000",完了
+A004,2026/10/04,Yamada,not-an-email,"15,000",未処理
+A005,,Kato,kato@example.com,,保留
+A006,2026/10/06,Ito,ito@example.com,"7,200",キャンセル
+A007,2026/10/07,Kudo,kudo@example.com,"２０,０００",completed
+A008,2026/10/08,Mori,mori@example.com,"3,300",pending
+A009,2026/10/09,Hara,hara@example.com,"11,400",完了
+A010,2026/10/10,Ota,ota@example.com,"6,600",cancel
+A011,2026/10/11,Noda,noda@example.com,"13,900",未処理
+A012,2026/10/12,Eda,eda@example.com,"5,500",完了
