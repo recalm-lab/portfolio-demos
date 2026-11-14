@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>社内文書RAGチャットボット（自社デモ）</title>
+<style>
+  body { font-family: sans-serif; max-width: 760px; margin: 2em auto; padding: 0 1em; }
+  h1 { font-size: 1.2em; }
+  .note { color: #555; font-size: .85em; }
+  #log { border: 1px solid #ccc; border-radius: 8px; padding: 1em; min-height: 240px; }
+  .msg { margin: .8em 0; white-space: pre-wrap; }
+  .q { font-weight: bold; }
+  .src { color: #555; font-size: .82em; }
+  form { display: flex; gap: .5em; margin-top: 1em; }
+  input[type=text] { flex: 1; padding: .6em; }
+  button { padding: .6em 1.2em; }
+</style>
+</head>
+<body>
+<h1>社内文書RAGチャットボット</h1>
+<p class="note">これは当社（Recalm Lab）の技術検証用デモです。架空の会社の社内規程サンプルを読み込み、根拠付きで回答します。文書に無い内容には「文書に記載がありません」と答えます。</p>
+<div id="log"></div>
+<form id="f">
+  <input type="text" id="q" placeholder="例: 有給休暇の申請期限はいつまでですか？" autocomplete="off">
+  <button type="submit">送信</button>
+</form>
+<script>
+const log = document.getElementById('log');
+document.getElementById('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const q = document.getElementById('q').value.trim();
+  if (!q) return;
+  document.getElementById('q').value = '';
+  log.insertAdjacentHTML('beforeend', `<div class="msg q">Q. ${q}</div>`);
+  const res = await fetch('/api/chat', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({question: q})});
+  const data = await res.json();
+  const src = data.sources.map(s => `${s.doc} / ${s.heading}（類似度 ${s.score}）`).join('<br>');
+  log.insertAdjacentHTML('beforeend', `<div class="msg">A. ${data.answer}</div><div class="src">${src}</div>`);
+});
+</script>
+</body>
+</html>
